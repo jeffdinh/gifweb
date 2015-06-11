@@ -49,8 +49,20 @@ class GifBotTest < Minitest::Test
 
     get "/gif" 
     assert_equal 200, late_response.status
+  end
 
-    
+  def test_can_store_times_gif_seen
+    User.create! name: "Jack"
+    post "/gif/add",
+      url: "http://media0.giphy.com/media/jUwpNzg9Icyr/giphy.gif"
+      created_at: datetime
+
+      url: "http://media.giphy.com/media/sIIhZliB2McA/giphy-facebook_s.jpg"
+      created_at: datetime
+
+      get "gif/2"
+      gif = Gif.find_by_id 2 
+      assert_equal gif.seen_count, 1
   end
 
   def test_can_list_all
