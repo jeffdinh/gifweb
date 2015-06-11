@@ -1,10 +1,22 @@
 require 'sinatra/base'
 
-require './todo'
+require './gifbot'
 
-class GifBot < Sinatra::Base
+class GifBotWeb < Sinatra::Base
   set :logging, true
 
+  def jiffybot
+  	GifBot.new
+  end
+
+  post "/gif/add" do
+  	jif = jiffybot.add_gif params[:url], "Bella"
+  	jif.id.to_s
+  end
+
+  get "/gif" do
+  	jiffybot.random_gif
+  end
 
 end
 
