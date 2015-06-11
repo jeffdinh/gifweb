@@ -53,31 +53,27 @@ class GifBotTest < Minitest::Test
   def test_can_store_times_gif_seen
     User.create! name: "Jack"
      post "/gif/add",
-      url: "http://media0.giphy.com/media/jUwpNzg9Icyr/giphy.gif",
+      url: "http://media0.giphy.com/media/jUwpNzg9Icyr/giphy.gif"
       
       post "/gif/add",
-      url: "http://media.giphy.com/media/sIIhZliB2McA/giphy-facebook_s.jpg",
+      url: "http://media.giphy.com/media/sIIhZliB2McA/giphy-facebook_s.jpg"
       
       get "gif/2"
       gif = Gif.find_by_id 2 
       assert_equal gif.seen_count, 1
   end
 
-<<<<<<< HEAD
   def test_can_list_all
     User.create! name: "Mike"
      post "/gif/add",
-      url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
+      url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif"
 
       post "/gif/add",
-      url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
+      url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif"
       
       get "gif/all"
       assert_equal 
 
-    
-  end
-=======
   # def test_can_list_all
   #   User.create! name: "Mike"
   #    post "/gif/add",
@@ -90,14 +86,15 @@ class GifBotTest < Minitest::Test
       
   #     get "gif/all"
   # end
->>>>>>> 9486e754bfe1d091dd916efd16fc68e0b9ca6f4d
+  end
 
   def test_can_tag_a_gif
     User.create! name: "Kayla"
      post "/gif/add",
       url: "http://media0.giphy.com/meda/jUwpNzg9Iyr/giphy.gif",
       tag: "Funny"
-     PATCH "gif/tag"
+
+     patch "gif/tag"
      assert_equal 200, last_response.status
   end
 

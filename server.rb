@@ -28,7 +28,7 @@ class GifBotWeb < Sinatra::Base
 	end
 
 	get "/gif/:tag" do
-		Gif.find_by_tag! params[:tag]
+		Gif.find params[:tag]
 	end
 end
 
