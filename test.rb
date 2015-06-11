@@ -17,11 +17,11 @@ class GifBotTest < Minitest::Test
     GifBotWeb
   end
 
-  # def setup
-  #   Item.delete_all
-  #   User.delete_all
-  #   List.delete_all
-  # end
+  def setup
+    Gif.delete_all
+    User.delete_all
+    Tag.delete_all
+  end
 
   def test_can_add_gif
     User.create! name: "Jeff"
@@ -32,7 +32,7 @@ class GifBotTest < Minitest::Test
 
     check_gif = Gif.find_by_url "http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif"
     assert check_gif
-    assert_equal check_gif.id, last_response.body
+    assert_equal check_gif.id.to_s, last_response.body
   end
 
   def test_can_get_random_gif
@@ -63,6 +63,7 @@ class GifBotTest < Minitest::Test
       assert_equal gif.seen_count, 1
   end
 
+<<<<<<< HEAD
   def test_can_list_all
     User.create! name: "Mike"
      post "/gif/add",
@@ -76,6 +77,20 @@ class GifBotTest < Minitest::Test
 
     
   end
+=======
+  # def test_can_list_all
+  #   User.create! name: "Mike"
+  #    post "/gif/add",
+  #     url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
+  #     created_at: Time.now
+
+  #     post "/gif/add",
+  #     url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
+  #     created_at: Time.now
+      
+  #     get "gif/all"
+  # end
+>>>>>>> 9486e754bfe1d091dd916efd16fc68e0b9ca6f4d
 
   def test_can_tag_a_gif
     User.create! name: "Kayla"
