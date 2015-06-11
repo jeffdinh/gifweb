@@ -26,9 +26,14 @@ class GifBotTest < Minitest::Test
   def test_can_add_gif
     User.create! name: "Jeff"
     post "/gif/add",
+<<<<<<< HEAD
       url: "http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif",
       created_at: Time.now
       
+=======
+      url: "http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif"
+      # created_at: datetime
+>>>>>>> ae56e47511cd5b2b4e762d4243572569bd366d9f
     assert_equal 200, last_response.status
 
     check_gif = Gif.find_by_url "http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif"
@@ -38,6 +43,7 @@ class GifBotTest < Minitest::Test
 
   def test_can_get_random_gif
     User.create! name: "Bella"
+<<<<<<< HEAD
       post "/gif/add",
       url: "http://media0.giphy.com/media/jUwpNzg9IcyrK/giphy.gif",
       created_at: Time.now
@@ -52,6 +58,20 @@ class GifBotTest < Minitest::Test
       
       get "/gif" 
       assert_equal 200, late_response.status
+=======
+    post "/gif/add",
+      url: "http://media0.giphy.com/media/jUwpNzg9IcyrK/giphy.gif",
+      # created_at: datetime
+
+      url: "http://media.giphy.com/media/sIIhZliB2McAo/giphy-facebook_s.jpg",
+      # created_at: datetime
+
+      url:"http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif"
+      # created_at: datetime
+
+    get "/gif" 
+    assert_equal 200, late_response.status
+>>>>>>> ae56e47511cd5b2b4e762d4243572569bd366d9f
   end
 
   def test_can_store_times_gif_seen
