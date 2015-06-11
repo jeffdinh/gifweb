@@ -54,13 +54,10 @@ class GifBotTest < Minitest::Test
     User.create! name: "Jack"
      post "/gif/add",
       url: "http://media0.giphy.com/media/jUwpNzg9Icyr/giphy.gif",
-      created_at: Time.now
       
       post "/gif/add",
       url: "http://media.giphy.com/media/sIIhZliB2McA/giphy-facebook_s.jpg",
-      created_at: Time.now
       
-
       get "gif/2"
       gif = Gif.find_by_id 2 
       assert_equal gif.seen_count, 1
@@ -70,19 +67,23 @@ class GifBotTest < Minitest::Test
     User.create! name: "Mike"
      post "/gif/add",
       url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
-      created_at: Time.now
 
       post "/gif/add",
       url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
-      created_at: Time.now
       
-      get "gif/all",
+      get "gif/all"
+      assert_equal 
 
     
   end
 
   def test_can_tag_a_gif
-    
+    User.create! name: "Kayla"
+     post "/gif/add",
+      url: "http://media0.giphy.com/meda/jUwpNzg9Iyr/giphy.gif",
+      tag: "Funny"
+     PATCH "gif/tag"
+     assert_equal 200, last_response.status
   end
 
   def test_can_list_gifs_specified_tag
