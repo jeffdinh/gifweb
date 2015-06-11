@@ -18,6 +18,18 @@ class GifBotWeb < Sinatra::Base
   	jiffybot.random_gif
   end
 
+	get "/gif/all" do
+		jiffybot.all_gifs
+	end
+
+	patch "/gif/tag" do
+		jif = jiffybot.tag_gif
+		jif.id_to_s
+	end
+
+	get "/gif/:tag" do
+		Gif.find_by_tag! params[:tag]
+	end
 end
 
 if $PROGRAM_NAME == __FILE__
