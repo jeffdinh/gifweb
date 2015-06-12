@@ -41,51 +41,44 @@ class GifBotTest < Minitest::Test
         url: "http://media0.giphy.com/media/jUwpNzg9IcyrK/giphy.gif"
 
       post "/gif/add",
-        url: "http://media0.gphy.com/media/jUwpNzg9IcyrK/giphy.gif"
+        url: "http://i.imgur.com/gustJxn.gif"
       
       post "/gif/add",
-        url: "http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif"
+        url: "http://i.imgur.com/Hsnufqt.gif"
       
       get "/gif" 
       assert_equal 200, last_response.status
   end
 
   def test_can_store_times_gif_seen
+  	skip
     User.create! name: "Jack"
      post "/gif/add",
-      url: "http://media0.giphy.com/media/jUwpNzg9Icyr/giphy.gif"
+      url: "http://i.imgur.com/aHK7ZVX.gif"
+
+     get "gif/all"
       
-      post "/gif/add",
-      url: "http://media.giphy.com/media/sIIhZliB2McA/giphy-facebook_s.jpg"
-      
-      get "gif/2"
-      gif = Gif.find_by_id 2 
-      assert_equal gif.seen_count, 1
+      gif = Gif.find_by_url "http://i.imgur.com/aHK7ZVX.gif"
+      assert_equal 1, gif.seen_count
   end
 
   def test_can_list_all
     User.create! name: "Mike"
      post "/gif/add",
-      url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif"
+      url: "http://i.imgur.com/GR3GKE5.gif"
 
-      post "/gif/add",
-      url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif"
-      
-      get "gif/all"
-      assert_equal 
+    post "/gif/add",
+      url: "http://i.imgur.com/CYpTh6Q.gif"
 
-  # def test_can_list_all
-  #   User.create! name: "Mike"
-  #    post "/gif/add",
-  #     url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
-  #     created_at: Time.now
+    get "gif/all"
 
-  #     post "/gif/add",
-  #     url: "http://media0.giphy.com/meda/jUwpNzg9Icyr/giphy.gif",
-  #     created_at: Time.now
-      
-  #     get "gif/all"
-  # end
+    assert_equal 200, last_response.status
+
+	  should_be_all = Gif.all
+	  assert_equal 2, should_be_all.count
+
+    first_gif = should_be_all.first
+    assert_equal "http://i.imgur.com/GR3GKE5.gif", first_gif["url"]
   end
 
   def test_can_tag_a_gif
@@ -96,9 +89,12 @@ class GifBotTest < Minitest::Test
 
      patch "gif/tag"
      assert_equal 200, last_response.status
+
+     gif = Gif.find_by_tags "Funny" 
+     assert_equal true, gif.include?("http://media0.giphy.com/meda/jUwpNzg9Iyr/giphy.gif")
   end
 
   def test_can_list_gifs_specified_tag
-    
+    skip
   end
 end
