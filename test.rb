@@ -38,16 +38,22 @@ class GifBotTest < Minitest::Test
   def test_can_get_random_gif
     User.create! name: "Bella"
       post "/gif/add",
-        url: "http://media0.giphy.com/media/jUwpNzg9IcyrK/giphy.gif"
+        url: "http://media0.giphy.com/media/jUwpNzg9IcyrK/giphy.gif",
+        seen_count: 0
 
       post "/gif/add",
-        url: "http://i.imgur.com/gustJxn.gif"
+        url: "http://i.imgur.com/gustJxn.gif",
+        seen_count: 0
       
       post "/gif/add",
-        url: "http://i.imgur.com/Hsnufqt.gif"
+        url: "http://i.imgur.com/Hsnufqt.gif",
+        seen_count: 0
       
       get "/gif" 
       assert_equal 200, last_response.status
+
+      random_results = Gif.first
+      assert_equal 1, random_results["seen_count"]
   end
 
   def test_can_store_times_gif_seen
@@ -83,15 +89,15 @@ class GifBotTest < Minitest::Test
 
   def test_can_tag_a_gif
     User.create! name: "Kayla"
-     post "/gif/add",
-      url: "http://media0.giphy.com/meda/jUwpNzg9Iyr/giphy.gif",
+     to_tag = post "/gif/add",
+      url: "http://i.imgur.com/OH3IkBS.gif"
+
+     patch "/gif/tag",
+     	id: to_tag.id,
       tag: "Funny"
 
-     patch "gif/tag"
      assert_equal 200, last_response.status
-
-     gif = Gif.find_by_tags "Funny" 
-     assert_equal true, gif.include?("http://media0.giphy.com/meda/jUwpNzg9Iyr/giphy.gif")
+     assert_equal true, gif.url.include?("http://i.imgur.com/OH3IkBS.gif")
   end
 
   def test_can_list_gifs_specified_tag

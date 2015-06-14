@@ -22,7 +22,7 @@ class GifBot
 
   def tag_gif id, tag_name
     tag = Tag.where(name: tag_name).first_or_create!
-    gif = Gif.find id
+    gif = Gif.find(id)
     #GifTag.create! tag_id: tag.id, gif_id: gif.id
     gif.tags << tag
   end

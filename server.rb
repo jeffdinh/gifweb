@@ -23,7 +23,7 @@ class GifBotWeb < Sinatra::Base
 	end
 
 	patch "/gif/tag" do
-		jif = jiffybot.tag_gif params[:id], params[:tag_id]
+		jif = jiffybot.tag_gif params[:id], params[:name]
 		jif.id_to_s
 	end
 
